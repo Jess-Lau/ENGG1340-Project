@@ -23,8 +23,23 @@ struct Rooms {
     string item;
 };
 
-int main() {
-    printIntro();
-    cout << "Test" << endl;
+void setupRooms(Rooms room[]) {
+    room[0] = {"Minimal Space", "Bazaar", "Bat Cavern", "", "Mirror Maze", ""};
+    room[1] = {"Mirror Maze", "", "Liminal Space", "", "", "Crystal"};
+    room[2] = {"Meat Locker", "Quicksand", "Bazaar", "", "", "Fig Newtoon"};
+    room[3] = {"Quicksand", "", "", "Meat Locker", "", "Robe"};
+    room[4] = {"Bazaar", "Dojo", "", "Liminal Space", "Meat Locker", "Altoids"};
+    room[5] = {"Dojo", "", "", "Bazaar", "", "Boss"};
+    room[6] = {"Bat Cavern", "Volcano", "", "", "Liminal Space", "Staff"};
+    room[7] = {"Volcano", "", "", "Bat Cavern", "", "Syrup"};
 }
 
+int main() {
+    printIntro();
+
+    // generate the rooms (fixed)
+    Rooms room[8];
+    setupRooms(room);
+
+    //
+}
