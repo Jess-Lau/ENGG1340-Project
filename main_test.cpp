@@ -11,7 +11,6 @@ void printIntro() {
 
     // Press any key to continue . . . 
     system("pause");
-    clearScreen();
 }
 
 struct Rooms {
@@ -34,12 +33,36 @@ void setupRooms(Rooms room[]) {
     room[7] = {"Volcano", "", "", "Bat Cavern", "", "Syrup"};
 }
 
+void printStat(string *currentRoom, string inventory[]) {
+    cout << "You are in the " << *currentRoom << "\n" << "Inventory: ";
+    int i = 0;
+    while (inventory[i] != "") {
+        string comma = ", ";
+        if (inventory[i+1] == "") {
+            comma = "";
+        }
+        cout << inventory[i] + comma;
+        i++;
+    }
+}
+
 int main() {
-    printIntro();
 
     // generate the rooms (fixed)
     Rooms room[8];
     setupRooms(room);
 
-    //
+    string inventory[10] = {"Sword", "Sheild"}; // set a inventory of space 10
+    string *currentRoom = &room[0].name; // a pointer to the current room (room[0])
+    string msg = ""; // result of last move
+
+    clearScreen();
+    printIntro();
+
+    // Gameplay
+    while (1) {
+        clearScreen();
+        printStat(currentRoom, inventory);
+        
+    }
 }
