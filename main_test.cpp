@@ -1,15 +1,13 @@
 #include <iostream>
-// using namespace std;
+using namespace std;
 
 void printIntro() {
-    std::cout << "\t\tWelcome to my game\n\n"
-                 "You must collect all six items before fighting the boss.\n\n"
-                 "Moves:\t'go {direction}' (travel north, south, east, or west)\n"
-                 "\t'get {item}' (add nearby item to inventory)\n"
-                 << std::endl;
+    cout << "\t\tWelcome to my game\n\n"
+            "You must collect all six items before fighting the boss.\n" << endl;
 
-    std::cout << "Press any key to continue...";
-    std::cin.ignore(); // Wait for user input
+    cout << "Press any key to continue...";
+    cin.ignore();
+}
 
 int main() {
 
