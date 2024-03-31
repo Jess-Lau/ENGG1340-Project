@@ -73,8 +73,8 @@ int main() {
             if (std::find(inventory.begin(), inventory.end(), nearby_item) == inventory.end()) {
                 if (nearby_item.back() == 's') {
                     std::cout << "You see " << nearby_item << std::endl;
-                } else if (std::find(vowels.begin(), vowels.end(), nearby_item[0]) != vowels.end()) {
-                    std::cout << "You see an " << nearby_item << std::endl;
+                // } else if (std::find(vowels.begin(), vowels.end(), nearby_item[0]) != vowels.end()) {
+                //     std::cout << "You see an " << nearby_item << std::endl;
                 } else {
                     std::cout << "You see a " << nearby_item << std::endl;
                 }
