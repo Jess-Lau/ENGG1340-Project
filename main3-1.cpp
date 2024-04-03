@@ -12,6 +12,7 @@ void clearScreen();
 
 void printIntro();
 
+
 struct Rooms {
     string name;
     string east;
