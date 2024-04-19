@@ -3,12 +3,12 @@ Group 45
 
 Group members：
 Lau Chung Hei (@Jess-Lau)
-(@chan2000justin)
+Pang Sik Yuen (@RyanPangSY)
 (@KwongKinTo)
+(@chan2000justin)
 (@penny064)
-(@RyanPangSY)
 
-Project Name: Text Based Dungeon
+Project Name: Text-Based Dungeon
 
 Game Description:
 
