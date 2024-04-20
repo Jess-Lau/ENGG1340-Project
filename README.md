@@ -1,7 +1,9 @@
-# ENGG1340-Project
+# ENGG1340-Projec
+# Can anyone turn on the insight function in github?
+
 Group 45
 
-Group members：
+Group members:
 Lau Chung Hei (@Jess-Lau), 
 Pang Sik Yuen (@RyanPangSY), 
 (@KwongKinTo), 
