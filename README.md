@@ -1,5 +1,4 @@
-# ENGG1340-Projec
-# Can anyone turn on the insight function in github?
+# ENGG1340-Project
 
 Group 45
 
@@ -14,4 +13,6 @@ Project Name: Text-Based Dungeon
 
 Game Description:
 
+
 Features:
+
