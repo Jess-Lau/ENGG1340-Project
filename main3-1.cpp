@@ -323,7 +323,7 @@ void setupRooms(Rooms room[]) {
     room[7] = {"Volcano", "", "", "Bat Cavern", "", items[5]};
     
     // Generate a random room number for the zombie
-    int zombieRoom = rand() % 8;
+    int zombieRoom = rand() % 7 + 1;
     room[zombieRoom].item = "Zombie";
     zombie.currentRoom = room[zombieRoom].name;
     zombie.direction = "nsew"[rand() % 4];
