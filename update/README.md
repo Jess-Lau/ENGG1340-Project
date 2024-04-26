@@ -68,7 +68,54 @@ g++ -pedantic-errors -std=c++11 inRoom.cpp -o test $(ncursesw5-config --cflags -
 To execute the program, type: 
 ./test
 
-## Features implemented:
+## Game Rules/ Features Impletmented:
+Objective:
+The player's objective is to defeat the boss and complete their journey.
+
+Gameplay Actions:  
+During the game, the player may pick up items, beat the zombies, and use the items in inventory to kill the boss.
+Navigation and Movement: The player can move around using the navigation keys: ‘W’, ‘S’, ‘A’, ‘D’ keys, representing north, south, west, and east respectively.
+Picking Up items:  “●” represents nearby items that are available for player collection. The player shall press “Space Bar” to collect the item into inventory.
+Killing Zombies: The player shall use navigation keys to point towards the direction of the zombie, then press “SpaceBar” to kill the zombie. 
+Boss Battle: will be separately discussed
+
+Gameplay Mechanics:
+Starting Room: The game begins in the "Liminal Space," which is the initial room.
+
+Current Room Visual Map: The game provides a visualized map which shows the room the player is currently staying in. “P” character represents the player’s current position. “Z" character represents the zombie’s current position. “○” represents uncollected items in the room. “●” represents nearby items that are available for player collection.
+
+Game Map: The game map consists of different rooms that the player can move between. Each room may contain valuable collectible items or a group of zombies. The link between different rooms and the position of the boss room is randomized. The player will face a different game map for every gameplay. The blank space around the boundary of each room represents the “door” to exit the current room, which will lead the player to enter a new room.
+
+Saving Progress: The player can save their progress and resume the game later. Saved progress includes the player's location, inventory, and other relevant information.
+
+Hit Points and Interaction with Items and Zombie:
+Hit Points (Health)
+Inventory: The player has an inventory to store collected items, demonstrated using white dots in the game. An inventory consisting of one item will show an inventory list as: □ ■ ■ ■ ■ ■ ■. 
+
+Picking up an item can increase the Hit Points by 5%, disregarding the initial Hit Points.
+
+Zombie: The player would encounter one to three zombies inevitably in most of the rooms. Zombies will chase after the player, and the player will get attacked by zombies when they are in close proximity.
+
+Being attacked by a zombie would lead to a decrease in Hit Points of 5%. Killing a zombie can increase the Hit Points by 5%, disregarding the initial Hit Points.
+
+Boss Battle:
+The player will encounter a boss and beat it in order to complete their journey. The player needs to strategize and use collected items to defeat the boss.
+Players can choose between 3 options in response to the Boss’ action (Attack, Dodge or Heal) in each turn:
+Attack: This option would lead to a 10-point decrement of the boss’s hit points. Every item in the inventory would create an additional Attack Point.
+
+Dodge: This option would dodge the boss’ attack to prevent from resulting Hit Points reduction. If the boss does not choose the "Attack" option, nothing will happen.
+
+Heal: This option would lead to a 10-point increment of the player’s hit points.
+
+Super Attack Modes of the Boss:
+Emotional Damage Attack and Depression: When the Boss chooses to attack the player using “Emotional Damage Attack”, the player will face “Depression mode”. Under “Depression mode”, the Attack Points of the player reduces by 1 (Can be superimposed if the boss makes more than 1 “Emotional Damage Attack” during the fight.
+
+Rage Mode: The boss will be under “Rage mode” if the Hit Points of the boss is more than 120%. Under “Rage Mode”, the Attack Points of the Boss increases by 10.
+
+“Rage Mode” and “Emotional Damage Attack” Mode can be superimposed.
+Challenges and highlights: 
+Map: The map of the game would not be shown, which also makes the game challenging. 
+Randomized positions: The position of items and zombies are randomized, and the map is also randomly generated, leading to a sense of uncertainty, which makes the game more intriguing. 
 
 
 
