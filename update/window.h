@@ -181,106 +181,6 @@ void menuWin(std::string & mode) {
     return;
 }
 
-void selectionWin(bool & endGame) {
-
-    // signal(SIGINT, signalHandler);
-    // signal(SIGTSTP, signalHandler);
-    
-    // Ncurse initialization
-    initscr();
-    cbreak();
-    noecho();
-
-    int yMax, xMax;
-    getmaxyx(stdscr, yMax, xMax);
-
-    int width = 80, height = 13;
-
-    WINDOW * meunWin = newwin(height, width, 0, 1);
-    box(meunWin, 0, 0);
-    refresh();
-    wrefresh(meunWin);
-
-    keypad(meunWin, true); // Enable arrow keys (and other special keys)
-
-    std::vector<std::string> choices = {"Save and Quit", "Restart", "Settings"};
-    int choice;
-    int highlight = 0;
-
-    while (choice != 27) {
-        for (int i = 0; i < choices.size(); i++) {
-            if (i == highlight) {
-                wattron(meunWin, A_REVERSE);
-            }
-            mvwprintw(meunWin, i + 1, printCentre(choices[i], width), choices[i].c_str());
-            wattroff(meunWin, A_REVERSE);
-            wmove(meunWin, 11, 2);
-        }
-        choice = wgetch(meunWin);
-        switch (choice) {
-            case KEY_UP: case 'w': case 'W':
-                highlight--;
-                if (highlight == -1) {
-                    highlight = 0;
-                }
-                break;
-            case KEY_DOWN: case 's': case 'S':
-                highlight++;
-                if (highlight == choices.size()) {
-                    highlight = choices.size()-1;
-                }
-                break;
-            default:
-                break;
-        }
-        if (choice == 10) {
-            break;
-        }
-    }
-
-    if (choice == 27) {
-        endGame = false;
-    } else if (choices[highlight] == "Save and Quit") {
-        endGame = true;
-    } else if (choices[highlight] == "Restart") {
-        endGame = false;
-    } else if (choices[highlight] == "Settings") {
-        endGame = false;
-    }
-
-    endwin();
-
-    /*
-    while ((int)c != 27) {
-        clear();
-        if (c == KEY_UP) {
-            mvwprintw(meunWin, 1, 2, "You pressed UP.");
-        } else if (c == KEY_DOWN) {
-            mvwprintw(meunWin, 1, 2, "You pressed DOWN.");
-        } else if (c == KEY_LEFT) {
-            mvwprintw(meunWin, 1, 2, "You pressed LEFT.");
-        } else if (c == KEY_RIGHT) {
-            mvwprintw(meunWin, 1, 2, "You pressed RIGHT.");
-        } else if (c == 103) {
-            mvwprintw(meunWin, 1, 2, "You pressed ENTER.");
-        } else if (c == 'w' || c == 'W') {
-            mvwprintw(meunWin, 1, 2, "You pressed UP.");
-        } else if (c == 'a' || c == 'A') {
-            mvwprintw(meunWin, 1, 2, "You pressed LEFT.");
-        } else if (c == 's' || c == 'S') {
-            mvwprintw(meunWin, 1, 2, "You pressed DOWN.");
-        } else if (c == 'd' || c == 'D') {
-            mvwprintw(meunWin, 1, 2, "You pressed RIGHT.");
-        } else {
-            mvwprintw(meunWin, 1, 2, "You pressed %d", c);
-            wrefresh(meunWin);
-        }
-        
-        c = wgetch(meunWin);
-    }
-    */
-}
-
 void resumeGameWin(std::string & gameFile) {
     initscr();
     cbreak();
@@ -382,14 +282,14 @@ void settingWin() {
 
 void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string & healthBar, int highlight, std::string & msg, int damage, int maxHealth, int & depression) {
     int bossDamage = (bossHealth >= 120)? 30:20;
-    std::string attackMsg[] = {
+    std::string attackMsg[5] = {
         "The boss has farted (-",
         "You got slapped (-",
         "Your ass got kicked (-",
         "Linux told a horror story (-",
         "Emotional damage (-"
     };
-    int bossChoice = rand()%sizeof(attackMsg);
+    int bossChoice = rand()%5;
     srand(time(0));
     int bossMove = rand() % 8;
     switch(bossMove) {
@@ -398,8 +298,8 @@ void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string
             health -= bossDamage;
             if (health < 0) health = 0;
             // msg = attackMsg[bossChoice] + std::to_string(bossDamage) + "%%HP)";
-            msg = attackMsg[bossChoice] + std::to_string(bossDamage);
-            if (bossChoice == sizeof(attackMsg)-1) depression++;
+            msg = (attackMsg[bossChoice] + std::to_string(bossDamage) + "HP)");
+            if (bossChoice == sizeof(bossChoice)-1) depression++;
             break;
         case 4: case 5:
             bossMove = 1; // dodge
@@ -459,7 +359,77 @@ void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string
     }
 }
 
-void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame, int & bossHealth) {
+void selectionWin(bool & endGame, bool & restart) {
+
+    // signal(SIGINT, signalHandler);
+    // signal(SIGTSTP, signalHandler);
+    
+    // Ncurse initialization
+    initscr();
+    cbreak();
+    noecho();
+
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+    int width = 80, height = 13;
+
+    WINDOW * meunWin = newwin(height, width, 0, 1);
+    box(meunWin, 0, 0);
+    refresh();
+    wrefresh(meunWin);
+
+    keypad(meunWin, true); // Enable arrow keys (and other special keys)
+
+    std::vector<std::string> choices = {"Save and Quit", "Restart", "Settings"};
+    int choice;
+    int highlight = 0;
+
+    while (choice != 27) {
+        for (int i = 0; i < choices.size(); i++) {
+            if (i == highlight) {
+                wattron(meunWin, A_REVERSE);
+            }
+            mvwprintw(meunWin, i + 1, printCentre(choices[i], width), choices[i].c_str());
+            wattroff(meunWin, A_REVERSE);
+            wmove(meunWin, 11, 2);
+        }
+        choice = wgetch(meunWin);
+        switch (choice) {
+            case KEY_UP: case 'w': case 'W':
+                highlight--;
+                if (highlight == -1) {
+                    highlight = 0;
+                }
+                break;
+            case KEY_DOWN: case 's': case 'S':
+                highlight++;
+                if (highlight == choices.size()) {
+                    highlight = choices.size()-1;
+                }
+                break;
+            default:
+                break;
+        }
+        if (choice == 10) {
+            break;
+        }
+    }
+
+    if (choice == 27) {
+        endGame = false;
+    } else if (choices[highlight] == "Save and Quit") {
+        endGame = true;
+    } else if (choices[highlight] == "Restart") {
+        restart = true;
+    } else if (choices[highlight] == "Settings") {
+        settingWin();
+    }
+
+    endwin();
+}
+
+void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame, int & bossHealth, bool & restart) {
     const int maxHealth = health;
     std::string move;
     int depression = 0;
@@ -476,7 +446,9 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
 
     WINDOW * bossWin = newwin(height, width, 0, 1);
     box(bossWin, 0, 0);
-    refresh();
+    mvwprintw(bossWin, 2, printCentre("Boss Encounter", width), "Boss Encounter");
+    wrefresh(bossWin);
+    sleep(2);
     wrefresh(bossWin);
 
     keypad(bossWin, true); // Enable arrow keys (and other special keys)
@@ -535,8 +507,8 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
         if (bossHealth >= 120) mvwprintw(bossWin, 4, 35, "(RAGE)");
         if (depression > 0) mvwprintw(bossWin, 12, 2, "Depression +%d%%", depression);
         mvwprintw(bossWin, 13, 2, "ENGG1340 Victim");
-        mvwprintw(bossWin, 14, 2, "                ");
-        mvwprintw(bossWin, 14, 2, "%s %d%%", healthBar.c_str(), health);
+        mvwprintw(bossWin, 14, 2, "                 ");
+        mvwprintw(bossWin, 14, 2, "%s %d%", healthBar.c_str(), health);
         mvwprintw(bossWin, 15, 5, "%s", player.c_str());
 
         for (int i = 0; i < choices.size(); i++) {
@@ -550,7 +522,7 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
             else if (i == highlight && i == 2) { msg = "Heal 10 hit point"; }
             else if (i == highlight && i == 3) { msg = "Flee the battle (-40HP)"; }
             
-            mvwprintw(bossWin, 20, 44, "                                  ");
+            mvwprintw(bossWin, 20, 44, "                                ");
             mvwprintw(bossWin, 20, 44, "%s", msg.c_str());
             wrefresh(bossWin);
             wmove(bossWin, 1, 1);
@@ -583,7 +555,7 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
         else if (choice == 27) {
             wclear(bossWin);
             wrefresh(bossWin);
-            selectionWin(endGame);
+            selectionWin(endGame, restart);
             if (endGame) {
                 saveGame = true;
                 break;
@@ -715,4 +687,4 @@ void gameOverWin(std::string & mode) {
 
 // g++ selectionWindow.cpp -o selectionWindow.exe -lncurses -DNCURSES_STATIC
 // g++ -pedantic-errors -std=c++11 selectionWindow.cpp -o test -lncurses -DNCURSES_STACTIC ; ./test
-// g++ -pedantic-errors -std=c++11 inRoom.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTICsdfe
+// g++ -pedantic-errors -std=c++11 inRoom.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC

@@ -120,7 +120,7 @@ void moveZombies(std::string room[][15], std::vector<Coordinates> & zombieCords,
             //     std::cout << '{' << cord.x << ',' << cord.y << "}, ";
             // }
             // std::cout << std::endl;
-            std::cout << closestPath[1].x << ' ' << (zombieCords[i].x-2) << ' ' << closestPath[1].y << ' ' << (zombieCords[i].y-2) << std::endl;
+            // std::cout << closestPath[1].x << ' ' << (zombieCords[i].x-2) << ' ' << closestPath[1].y << ' ' << (zombieCords[i].y-2) << std::endl;
             if (closestPath.size() > 1 && abs(closestPath[1].x - (zombieCords[i].x-2)) + abs(closestPath[1].y - (zombieCords[i].y-2)) == 1) {
                 // std::cout << "IN" << std::endl;
                 std::string intputKey = "";

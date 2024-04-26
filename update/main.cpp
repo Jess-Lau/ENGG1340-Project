@@ -15,6 +15,7 @@
 
 #include "gameSetUp.h"
 #include "inRoom.h"
+// #include "mapGeneration.h"
 #include "pathfinding.h"
 #include "window.h"
 
@@ -42,7 +43,7 @@ int main() {
     
     // Player Stat
     int health = 100;
-    int bossHealth = 100;
+    int bossHealth = 20;
 
     Coordinates facing = {0, 0};
 
@@ -72,7 +73,7 @@ int main() {
     while (mode == "Start Game" || mode == "Resume Game") {
         std::cout << "Start Game" << std::endl;
         clearScreenW();
-        
+
         if (mode == "Start Game") {
             generateMap(roomMap, mapLength, mapWidth, rooms, startingRoom, bossRoom);
             createInRoom(rooms, roomMap[currentRoomCord.x][currentRoomCord.y], room, roomWidth, roomLength, playerCord, itemCord, zombieCord);
