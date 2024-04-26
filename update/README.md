@@ -8,3 +8,4 @@ Run the game once to check the bugs:
 - health = 0% and game won't end after defected the boss
 - debug info suddent comes up
 - two game screens appear when start initially (tested on WSL 2)
+- todo: create save folder
