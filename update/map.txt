@@ -1,10 +1,10 @@
-                                                Volcano                                                                                     
+                                                                                     Bat Cavern ———     Meat Locker ———            Dojo     
+                                                                                             |                                              
+                                                Volcano         Meat Locker ———          Bazaar ———     Mirror Maze                         
+                                                                                             |                                              
+                                              Quicksand       Liminal Space ———       Quicksand                                             
+                                                     |                                       |                                              
+                                            Mirror Maze          Bat Cavern ———         Volcano                                             
+                                                                         |                                                                  
+                               Dojo              Bazaar ———                                                                                 
                                                      |                                                                                      
-                             Bazaar ———      Bat Cavern ———            Dojo                                                                 
-                                                     |                                                                                      
-                                            Mirror Maze ———   Liminal Space                                                                 
-                                                     |                   |                                                                  
-                                              Quicksand         Meat Locker                                                                 
-                                                                                                                                            
-                                                                                                                                            
-                                                                                                                                            

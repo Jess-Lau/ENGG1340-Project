@@ -15,7 +15,6 @@
 
 #include "gameSetUp.h"
 #include "inRoom.h"
-// #include "mapGeneration.h"
 #include "pathfinding.h"
 #include "window.h"
 
@@ -72,15 +71,19 @@ int main() {
 
     while (mode == "Start Game" || mode == "Resume Game") {
         std::cout << "Start Game" << std::endl;
+        clearScreenW();
+        
         if (mode == "Start Game") {
             generateMap(roomMap, mapLength, mapWidth, rooms, startingRoom, bossRoom);
             createInRoom(rooms, roomMap[currentRoomCord.x][currentRoomCord.y], room, roomWidth, roomLength, playerCord, itemCord, zombieCord);
         }
+
         exportMap(roomMap, rooms, mapLength, mapWidth);
-        printInRoom(room, roomWidth, roomLength, playerCord, "NULL", inventory, health);
+        // printInRoom(room, roomWidth, roomLength, playerCord, "NULL", inventory, health);
         // gameplayWin(room, roomWidth, roomLength);
 
         bool endGame = false;
+        bool restart = false;
 
         while (!endGame) {
             std::string inputKey;
@@ -97,9 +100,12 @@ int main() {
                 msg = "";
 
                 if (inputKey == "ESC") {
-                    selectionWin(endGame);
+                    selectionWin(endGame, restart);
                     if (endGame) {
                         saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth);
+                        break;
+                    }
+                    else if (restart) {
                         break;
                     }
                 }
@@ -154,12 +160,12 @@ int main() {
                 }
 
                 if (!rooms[roomMap[currentRoomCord.x][currentRoomCord.y]].isStartingRoom && zombieCord.size() > 0) {
-                    for (int i = 0; i < 15; i++) {
-                        for (int j = 0; j < 15; j++) {
-                            std::cout << '|' << room[i][j];
-                        }
-                        std::cout << std::endl;
-                    }
+                    // for (int i = 0; i < 15; i++) {
+                    //     for (int j = 0; j < 15; j++) {
+                    //         std::cout << '|' << room[i][j];
+                    //     }
+                    //     std::cout << std::endl;
+                    // }
                     moveZombies(room, zombieCord, playerCord);
                 }
 
@@ -189,9 +195,12 @@ int main() {
 
                     if (rooms[roomMap[currentRoomCord.x][currentRoomCord.y]].isBossRoom) {
                         bool needSaveGame;
-                        bossFightWin(health, inventory.size(), endGame, needSaveGame, bossHealth);
+                        bossFightWin(health, inventory.size(), endGame, needSaveGame, bossHealth, restart);
                         if (needSaveGame) {
                             saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth);
+                        }
+                        else if (restart) {
+                            break;
                         }
                     }
                     
@@ -219,6 +228,7 @@ int main() {
                 // std::cin.get();
             }
             // gameOverWin();
+            if (restart) break;
         }
         gameOverWin(mode);
     }

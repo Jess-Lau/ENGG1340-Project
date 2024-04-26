@@ -163,7 +163,7 @@ void generateMap(std::string roomMap[][7], const int mapLength, const int mapWid
         spreadRoom(rooms, roomMap, roomsNotGenerated, coordinate, mapLength, mapWidth, bossRoom, bossRoomPlaced);
     }
 
-    printMap(roomMap, mapLength, mapWidth);
+    // printMap(roomMap, mapLength, mapWidth);
 }
 
 void exportMap(std::string roomMap[][7], std::map<std::string, Rooms> rooms, const int mapLength, const int mapWidth) {
