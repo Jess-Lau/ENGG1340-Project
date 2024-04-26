@@ -280,10 +280,11 @@ void printIntro() {
     cout << "Welcome to my game\n\n"
             "You must collect all six items before fighting the boss.\n" <<
             "Moves:\t'go {direction}' (travel north, south, east, or west)\n" <<
-            "\t'get {item}' (add nearby item to inventory)\n" << endl;
+            "\t'get {item}' (add nearby item to inventory)\n\n\n" <<
+            "Press ENTER to continue . . ." << endl;
 
-    // Press any key to continue . . . 
-    system("pause");
+    // Press Enter to continue . . . 
+    cin.get(); // wait for user input
 }
 
 void add_to_inventory(Inventory * &head, Inventory * &tail, string item) {
