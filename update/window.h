@@ -208,16 +208,21 @@ void resumeGameWin(std::string & gameFile) {
             }
         }
         closedir(dir);
-    } else {
-        mvwprintw(resumeWin, 3, printCentre("No saved files found", width), "No saved files found");
     }
-
+    
     int choice;
     int highlight = 0;
-
     mvwprintw(resumeWin, 1, printCentre("Saves", width), "Saves");
 
-    while (choice != 27) {
+    if (choices.empty()) {
+        mvwprintw(resumeWin, 3, printCentre("No saved files found", width), "No saved files found");
+        choice = wgetch(resumeWin);
+        while (choice != 27) {
+            choice = wgetch(resumeWin);
+        }
+    }
+
+    while (choice != 27 && !choices.empty()) {
         for (int i = 0; i < choices.size(); i++) {
             if (i == highlight) {
                 wattron(resumeWin, A_REVERSE);
