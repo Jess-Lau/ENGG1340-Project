@@ -68,27 +68,29 @@ g++ -pedantic-errors -std=c++11 inRoom.cpp -o test $(ncursesw5-config --cflags -
 To execute the program, type: 
 ./test
 
-## Game Rules/ Features Impletmented:
-Objective:
+## Game Objective:
 The player's objective is to defeat the boss and complete their journey.
 
-Gameplay Actions:  
+## Gameplay Actions:  
+
 During the game, the player may pick up items, beat the zombies, and use the items in inventory to kill the boss.
 Navigation and Movement: The player can move around using the navigation keys: ‘W’, ‘S’, ‘A’, ‘D’ keys, representing north, south, west, and east respectively.
+
 Picking Up items:  “●” represents nearby items that are available for player collection. The player shall press “Space Bar” to collect the item into inventory.
+
 Killing Zombies: The player shall use navigation keys to point towards the direction of the zombie, then press “SpaceBar” to kill the zombie. 
 Boss Battle: will be separately discussed
 
-Gameplay Mechanics:
+## Gameplay Mechanics:
 Starting Room: The game begins in the "Liminal Space," which is the initial room.
 
 Current Room Visual Map: The game provides a visualized map which shows the room the player is currently staying in. “P” character represents the player’s current position. “Z" character represents the zombie’s current position. “○” represents uncollected items in the room. “●” represents nearby items that are available for player collection.
 
 Game Map: The game map consists of different rooms that the player can move between. Each room may contain valuable collectible items or a group of zombies. The link between different rooms and the position of the boss room is randomized. The player will face a different game map for every gameplay. The blank space around the boundary of each room represents the “door” to exit the current room, which will lead the player to enter a new room.
 
-Saving Progress: The player can save their progress and resume the game later. Saved progress includes the player's location, inventory, and other relevant information.
+Saving Progress: The player can save their progress and resume the game later by pressing esc, then select "save and exit". Saved progress includes the player's location, inventory, and other relevant information.
 
-Hit Points and Interaction with Items and Zombie:
+## Hit Points and Interaction with Items and Zombie:
 Hit Points (Health)
 Inventory: The player has an inventory to store collected items, demonstrated using white dots in the game. An inventory consisting of one item will show an inventory list as: □ ■ ■ ■ ■ ■ ■. 
 
@@ -98,7 +100,7 @@ Zombie: The player would encounter one to three zombies inevitably in most of th
 
 Being attacked by a zombie would lead to a decrease in Hit Points of 5%. Killing a zombie can increase the Hit Points by 5%, disregarding the initial Hit Points.
 
-Boss Battle:
+## Boss Battle:
 The player will encounter a boss and beat it in order to complete their journey. The player needs to strategize and use collected items to defeat the boss.
 Players can choose between 3 options in response to the Boss’ action (Attack, Dodge or Heal) in each turn:
 Attack: This option would lead to a 10-point decrement of the boss’s hit points. Every item in the inventory would create an additional Attack Point.
@@ -114,7 +116,7 @@ Rage Mode: The boss will be under “Rage mode” if the Hit Points of the boss 
 
 “Rage Mode” and “Emotional Damage Attack” Mode can be superimposed.
 
-Challenges and highlights: 
+## Challenges and highlights: 
 Map: The map of the game would not be shown, which also makes the game challenging. 
 Randomized positions: The position of items and zombies are randomized, and the map is also randomly generated, leading to a sense of uncertainty, which makes the game more intriguing. 
 
