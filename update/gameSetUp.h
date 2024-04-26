@@ -106,7 +106,6 @@ void spreadRoom(std::map<std::string, Rooms> & rooms, std::string roomMap[][7], 
 
     int lastDirection = -1;
     std::vector<Coordinates> nextCordinates;
-    nextCordinates.reserve(6);
 
     for (int i = 0; i < 4 && roomsNotGenerated.size() > 0; i++) {
         int direction = rand() % 4;
@@ -134,7 +133,9 @@ void spreadRoom(std::map<std::string, Rooms> & rooms, std::string roomMap[][7], 
     }
 }
 
-void generateMap(std::string roomMap[][7], const int mapLength, const int mapWidth, std::map<std::string, Rooms> & rooms, std::string & startingRoom, std::string & bossRoom) {
+void generateMap(std::string roomMap[][7], const int mapLength, const int mapWidth, std::map<std::string, Rooms> & rooms) {
+    // std::cout << "Generating Map..." << std::endl;
+
     std::srand(time(NULL));
     createRooms(rooms);
     int numOfRooms = rooms.size();
@@ -142,6 +143,8 @@ void generateMap(std::string roomMap[][7], const int mapLength, const int mapWid
     // find the starting room and boss room
     std::vector<std::string> roomsNotGenerated;
     roomsNotGenerated.reserve(numOfRooms);
+
+    std::string startingRoom, bossRoom;
 
     for (auto const room : rooms) {
         if (room.second.isStartingRoom) startingRoom = room.first;
@@ -159,7 +162,9 @@ void generateMap(std::string roomMap[][7], const int mapLength, const int mapWid
     Coordinates coordinate = {mapLength/2, mapWidth/2}; // starting room coordinate
     roomMap[coordinate.x][coordinate.y] = startingRoom; // set the Starting Room at the centre
     bool bossRoomPlaced = false;
+
     while (roomsNotGenerated.size() > 0) {
+        // std::cout << "No. of rooms not generated: " << roomsNotGenerated.size() << std::endl;
         spreadRoom(rooms, roomMap, roomsNotGenerated, coordinate, mapLength, mapWidth, bossRoom, bossRoomPlaced);
     }
 

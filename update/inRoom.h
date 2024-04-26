@@ -577,3 +577,47 @@ void printAll(std::string roomMap[][7], std::map<std::string, Rooms> rooms, Coor
     std::cout << "Health" << std::endl;
     std::cout << health << std::endl;
 }
+
+void clearData(const int mapLength, const int mapWidth, std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> & inventory, std::string & msg, const int roomWidth, const int roomLength, std::string room[15][15], Coordinates & playerCord, Coordinates & itemCord, std::vector<Coordinates> & zombieCord, std::map<std::string, Coordinates> & itemCords, std::map<std::string, std::vector<Coordinates>> & zombieCords, int & health, int & bossHealth, Coordinates facing) {
+
+    for (int i = 0; i < mapLength; i++) {
+        for (int j = 0; j < mapWidth; j++) {
+            roomMap[i][j] = "";
+        }
+    }
+
+    rooms.clear();
+
+    currentRoomCord = {mapLength/2, mapWidth/2};
+
+    inventory.clear();
+
+    msg = "";
+
+    for (int i = 0; i < roomWidth+4; i++) {
+        for (int j = 0; j < roomLength+4; j++) {
+            room[i][j] = "";
+        }
+    }
+
+    playerCord = {roomLength/2 + 2, roomWidth/2 + 2};
+
+    itemCord = {0, 0};
+
+    zombieCord.clear();
+    zombieCord = {{0,1}};
+
+    itemCords.clear();
+
+    zombieCords.clear();
+
+    health = 100;
+    bossHealth = 100;
+    // const int arr_size = 10;
+    // some_type src[arr_size];
+    // // ...
+    // some_type dest[arr_size];
+    // std::copy(std::begin(src), std::end(src), std::begin(dest));
+
+    return;
+}

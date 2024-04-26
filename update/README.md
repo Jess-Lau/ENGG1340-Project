@@ -2,14 +2,14 @@ RUN THE GAME BY:
 g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC ; ./test
 
 Run the game once to check the bugs:
-- when start the game by pressing arrow keys, the exit game meun pop up
+- when start the game by pressing arrow keys, the exit game meun pop up (solved)
 - flee function in boss fight have not implemented
 - half of boss screen appear sometimes in in-game menu
-- health = 0% and game won't end after defected the boss
-- debug info suddent comes up
-- two game screens appear when start initially (tested on WSL 2)
-- todo: create save folder
-- After beating boss and press play again (first time), the map didn't update: Player appeared in the boss room (but the room is empty), when the player enters the boss room again, boss: 0% HP, player HP = HP after beating the boss, After beating boss and press play again (2nd time) --> start game bug
+- health = 0% and game won't end after defected the boss (solved)
+- debug info suddent comes up (solved)
+- two game screens appear when start initially (tested on WSL 2) (solved)
+- todo: create save folder (solved)
+- After beating boss and press play again (first time), the map didn't update: Player appeared in the boss room (but the room is empty), when the player enters the boss room again, boss: 0% HP, player HP = HP after beating the boss, After beating boss and press play again (2nd time) --> start game bug (solved)
 - When no file is in the save folder, choose "Resume Game" and the screen will only display "Saves", not "Displaying no save file found
 
 
