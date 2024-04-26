@@ -9,7 +9,7 @@ Run the game once to check the bugs:
 - debug info suddent comes up
 - two game screens appear when start initially (tested on WSL 2)
 - todo: create save folder
-- After beating boss and press play again (first time), the map didn't update: Player appeared in the boss room (but the room is empty), when the player enters the boss room again, boss: 0% HP, player HP = HP after beating the boss, After beating boss and press play again (2nd time) --> start again screen
+- After beating boss and press play again (first time), the map didn't update: Player appeared in the boss room (but the room is empty), when the player enters the boss room again, boss: 0% HP, player HP = HP after beating the boss, After beating boss and press play again (2nd time) --> start game bug
 
 
 
