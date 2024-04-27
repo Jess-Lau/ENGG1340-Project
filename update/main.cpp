@@ -51,14 +51,12 @@ int main() {
 
     std::string mode = "";
     menuWin(mode);
-
+    
 
     while (mode == "Resume Game") {
-        std::cout << "Resume Game" << std::endl;
+        // std::cout << "Resume Game" << std::endl;
         std::string gameFile;
         resumeGameWin(gameFile);
-        std::cout << gameFile << std::endl;
-        std::cin.get();
         if (!gameFile.empty()) {
             loadGame(gameFile, roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
             // printAll(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
@@ -107,11 +105,9 @@ int main() {
             printAtMiddle(roomMap[currentRoomCord.x][currentRoomCord.y], roomWidth*3 + 4);
             inputKey = "NONE";
 
-            std::cout << "1" << std::endl;
             if (!inBossFight) {
                 inputKey = getInput();
             }
-            std::cout << "2" << std::endl;
 
             clearScreen();
             msg = "";
@@ -172,7 +168,7 @@ int main() {
             if (zombieCord.size() > 0) {
                 for (int i = 0; i < zombieCord.size(); i++) {
                     if (abs(playerCord.x - zombieCord[i].x) + abs(playerCord.y - zombieCord[i].y) == 1) {
-                        health -= 5;
+                        health -= 8;
                         msg = "You got attacked by a zombie";
                         if (health == 0) {
                             endGame = true;
