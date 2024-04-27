@@ -91,7 +91,8 @@ Game Map: The game map consists of different rooms that the player can move betw
 Saving Progress: The player can save their progress and resume the game later by pressing esc, then select "save and exit". Saved progress includes the player's location, inventory, and other relevant information.
 
 ## Hit Points and Interaction with Items and Zombie:
-Hit Points (Health)
+Hit Points (Health): A bar that shows the Hit Points of the player is displayed as follows: Health: ████████ 80%. The player initial starts with 100% hit points. When Health reaches 0%, the player loses. There is no upper limit of the player's health unless when the player is inside the boss room. 
+
 Inventory: The player has an inventory to store collected items, demonstrated using white dots in the game. An inventory consisting of 2 item and maximum capacity of 7 items will show an inventory list as: □ □ ■ ■ ■ ■ ■ .
 
 Picking up an item can increase the Hit Points by 5%, disregarding the initial Hit Points.
@@ -102,6 +103,8 @@ Being attacked by a zombie would lead to a decrease in Hit Points of 5%. Killing
 
 ## Boss Battle:
 The player will encounter a boss and beat it in order to complete their journey. The player needs to strategize and use collected items to defeat the boss.
+
+The players maximum Hit Points will be capped to the Hit Points just before they enter the boss room. If the player's HP = 80% before entering boss room, the maximum health the player can reach after healing is 80%.
 
 Players can choose between 3 options in response to the Boss’ action (Attack, Dodge or Heal) in each turn:
 -- Attack: This option would lead to a 10-point decrement of the boss’s hit points. Every item in the inventory would create an additional Attack Point.
@@ -114,6 +117,7 @@ Players can choose between 3 options in response to the Boss’ action (Attack, 
 25% chance for the boss to dodge
 
 Super Attack Modes of the Boss:
+
 Emotional Damage Attack and Depression: When the Boss chooses to attack the player using “Emotional Damage Attack”, the player will face “Depression mode”. Under “Depression mode”, the Attack Points of the player are reduced by 1 (Can be superimposed if the boss makes more than 1 “Emotional Damage Attack” during the fight.)
 
 Rage Mode: The boss will be under “Rage mode” if the Hit Points of the boss are more than 120%. Under “Rage Mode”, the Attack Points of the Boss increase by 10.
