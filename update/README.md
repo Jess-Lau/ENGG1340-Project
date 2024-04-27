@@ -92,7 +92,7 @@ Saving Progress: The player can save their progress and resume the game later by
 
 ## Hit Points and Interaction with Items and Zombie:
 Hit Points (Health)
-Inventory: The player has an inventory to store collected items, demonstrated using white dots in the game. An inventory consisting of one item will show an inventory list as: ■ □ □ □ □ □ □. 
+Inventory: The player has an inventory to store collected items, demonstrated using white dots in the game. An inventory consisting of 2 item and maximum capacity of 7 items will show an inventory list as: □ □ ■ ■ ■ ■ ■ .
 
 Picking up an item can increase the Hit Points by 5%, disregarding the initial Hit Points.
 
