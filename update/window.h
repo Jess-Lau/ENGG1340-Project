@@ -222,26 +222,43 @@ void resumeGameWin(std::string & gameFile) {
         }
     }
 
+    int scroll = 0;
+
     while (choice != 27 && !choices.empty()) {
-        for (int i = 0; i < choices.size(); i++) {
+        mvwprintw(resumeWin, 1, printCentre("Saves", width), "Saves");
+        for (int i = 0; i < choices.size() && i < 8; i++) {
             if (i == highlight) {
                 wattron(resumeWin, A_REVERSE);
             }
-            mvwprintw(resumeWin, i + 3, printCentre(choices[i].substr(0, choices[i].find(".")), width), choices[i].substr(0, choices[i].find(".")).c_str());
+            mvwprintw(resumeWin, i + 3, printCentre(choices[i+scroll].substr(0, choices[i+scroll].find(".")), width), choices[i+scroll].substr(0, choices[i+scroll].find(".")).c_str());
             wattroff(resumeWin, A_REVERSE);
             wmove(resumeWin, 11, 2);
         }
+        wrefresh(resumeWin);
         choice = wgetch(resumeWin);
         switch (choice) {
             case KEY_UP: case 'w': case 'W':
                 highlight--;
-                if (highlight == -1) {
+                // make the list scrollable
+                if (highlight == -1 && scroll != 0 && choices.size() > 8) {
+                    scroll--;
+                    highlight++;
+                }
+                else if (highlight == -1) {
                     highlight = 0;
                 }
                 break;
             case KEY_DOWN: case 's': case 'S':
                 highlight++;
-                if (highlight == choices.size()) {
+                // make the list scrollable
+                if (highlight == 8 && choices.size() > 8) {
+                    scroll++;
+                    highlight--;
+                    if (highlight + scroll == choices.size()) {
+                        scroll--;
+                    }
+                }
+                else if (highlight == choices.size()) {
                     highlight = choices.size()-1;
                 }
                 break;
@@ -249,9 +266,12 @@ void resumeGameWin(std::string & gameFile) {
                 break;
         }
         if (choice == 10) {
-            gameFile = choices[highlight];
+            gameFile = choices[highlight+scroll];
             break;
         }
+        wclear(resumeWin);
+        box(resumeWin, 0, 0);
+        // mvwprintw(resumeWin, 2, 2, "%d %d", highlight, scroll);
     }
 
     endwin();
@@ -285,7 +305,7 @@ void settingWin() {
     endwin();
 }
 
-void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string & healthBar, int highlight, std::string & msg, int damage, int maxHealth, int & depression) {
+void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string & healthBar, int highlight, std::string & msg, int damage, int maxHealth, int & depression, bool & leaveFight) {
     int bossDamage = (bossHealth >= 120)? 30:20;
     std::string attackMsg[5] = {
         "The boss has farted (-",
@@ -307,9 +327,11 @@ void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string
             if (bossChoice == sizeof(bossChoice)-1) depression++;
             break;
         case 4: case 5:
+            bossDamage = 0;
             bossMove = 1; // dodge
             break;
         case 6: case 7:
+            bossDamage = 0;
             bossMove = 2; // heal
             bossHealth += 10;
             if (bossHealth > 100) bossHealth == 100;
@@ -327,7 +349,7 @@ void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string
             break;
         case 1:
             if (bossMove == 0) {
-                health += 15;
+                health += bossDamage;
                 msg = "You have dodged the attack!";
             }
             else {
@@ -342,10 +364,12 @@ void makeMove(int & bossHealth, std::string & bossBar, int & health, std::string
             }
             break;
         case 3:
-            health -= 40;
+            health = health + bossDamage - 40;
             if (health < 0) {
                 health = 0;
             }
+            msg = "You have fled the battle!";
+            leaveFight = true;
             break;
         default:
             break;
@@ -437,7 +461,7 @@ void selectionWin(bool & endGame, bool & restart) {
     // std::cout << "Quit window" << std::endl;
 }
 
-void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame, int & bossHealth, bool & restart) {
+void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame, int & bossHealth, bool & restart, bool & leaveFight) {
     const int maxHealth = health;
     std::string move;
     int depression = 0;
@@ -524,12 +548,12 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
             }
             mvwprintw(bossWin, i + 18, 3, choices[i].c_str());
             wattroff(bossWin, A_REVERSE);
-            if (i == highlight && i == 0) { msg = "Deal " + std::to_string(10+extraDamage-depression) + " hit point to the boss"; }
+            if (i == highlight && i == 0) { msg = "Deal " + std::to_string(10+extraDamage-depression*2) + " hit point to the boss"; }
             else if (i == highlight && i == 1) { msg = "Dodge the boss's attack"; }
             else if (i == highlight && i == 2) { msg = "Heal 10 hit point"; }
             else if (i == highlight && i == 3) { msg = "Flee the battle (-40HP)"; }
             
-            mvwprintw(bossWin, 20, 44, "                                    ");
+            mvwprintw(bossWin, 20, 44, "                                   ");
             mvwprintw(bossWin, 20, 44, "%s", msg.c_str());
             wrefresh(bossWin);
             wmove(bossWin, 1, 1);
@@ -552,12 +576,13 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
                 break;
         }
         if (choice == 10) {
-            makeMove(bossHealth, bossBar, health, healthBar, highlight, msg, 10+extraDamage-depression, maxHealth, depression);
+            makeMove(bossHealth, bossBar, health, healthBar, highlight, msg, 10+extraDamage-depression*2, maxHealth, depression, leaveFight);
             mvwprintw(bossWin, 20, 44, "                              ");
             mvwprintw(bossWin, 20, 44, "%s", msg.c_str());
             wrefresh(bossWin);
             wmove(bossWin, 1, 1);
-            sleep(1.5);
+            sleep(1.7);
+            if (leaveFight && health > 0) break;
         }
         else if (choice == 27) {
             wclear(bossWin);
@@ -602,8 +627,8 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
             break;
         }
     }
-
-
+    wclear(bossWin);
+    wrefresh(bossWin);
     endwin();
 }
 

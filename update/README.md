@@ -4,7 +4,7 @@ g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --l
 
 Run the game once to check the bugs:
 - when starting the game by pressing the arrow keys, the exit game may pop up (solved)
-- The flee function in boss fights have not been implemented
+- The flee function in boss fights have not been implemented (done)
 - half of the boss screen appear sometimes in the in-game menu (solved)
 - health = 0% and the game won't end after defecting the boss (solved)
 - debug info sudden comes up (solved)

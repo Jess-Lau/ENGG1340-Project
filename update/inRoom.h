@@ -279,7 +279,7 @@ std::string addSpace (std::string name) {
     return name;
 }
 
-void saveGame(std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> inventory, std::string room[][15], Coordinates playerCord, Coordinates itemCord, std::vector<Coordinates> zombieCord, std::map<std::string, Coordinates> itemCords, std::map<std::string, std::vector<Coordinates>> zombieCords, int health, int bossHealth) {
+void saveGame(std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> inventory, std::string room[][15], Coordinates playerCord, Coordinates itemCord, std::vector<Coordinates> zombieCord, std::map<std::string, Coordinates> itemCords, std::map<std::string, std::vector<Coordinates>> zombieCords, int health, int bossHealth, Coordinates prevRoom, Coordinates prevPos, bool inBossFight) {
     // current date and time on the current system
     time_t now = time(0);
     // convert now to string form
@@ -368,13 +368,25 @@ void saveGame(std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Co
         fout << health << std::endl;
         fout << std::endl;
 
-        fout << "Boss health" << std::endl;
+        fout << "BossHealth" << std::endl;
         fout << bossHealth << std::endl;
+        fout << std::endl;
+
+        fout << "prevRoom" << std::endl;
+        fout << prevRoom.x << ' ' << prevRoom.y << std::endl;
+        fout << std::endl;
+
+        fout << "prevPos" << std::endl;
+        fout << prevPos.x << ' ' << prevPos.y << std::endl;
+        fout << std::endl;
+
+        fout << "inBossFight" << std::endl;
+        fout << inBossFight << std::endl;
     }
 }
 
 
-void loadGame(std::string gameFile, std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> & inventory, std::string room[][15], Coordinates & playerCord, Coordinates & itemCord, std::vector<Coordinates> & zombieCord, std::map<std::string, Coordinates> & itemCords, std::map<std::string, std::vector<Coordinates>> & zombieCords, int & health, int & bossHealth) {
+void loadGame(std::string gameFile, std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> & inventory, std::string room[][15], Coordinates & playerCord, Coordinates & itemCord, std::vector<Coordinates> & zombieCord, std::map<std::string, Coordinates> & itemCords, std::map<std::string, std::vector<Coordinates>> & zombieCords, int & health, int & bossHealth, Coordinates & prevRoom, Coordinates & prevPos, bool & inBossFight) {
     std::string gameFilePath = "save/" + gameFile;
     std::ifstream fin;
     fin.open(gameFilePath.c_str());
@@ -495,8 +507,21 @@ void loadGame(std::string gameFile, std::string roomMap[][7], std::map<std::stri
             else if (line == "Health") {
                 fin >> health;
             }
-            else if (line == "Boss health") {
+            else if (line == "BossHealth") {
                 fin >> bossHealth;
+            }
+            else if (line == "prevRoom") {
+                getline(fin, line);
+                std::istringstream iss(line);
+                iss >> prevRoom.x >> prevRoom.y;
+            }
+            else if (line == "prevPos") {
+                getline(fin, line);
+                std::istringstream iss(line);
+                iss >> prevPos.x >> prevPos.y;
+            }
+            else if (line == "inBossFight") {
+                fin >> inBossFight;
             }
         }
     }
@@ -506,7 +531,7 @@ void loadGame(std::string gameFile, std::string roomMap[][7], std::map<std::stri
     std::remove(gameFilePath.c_str());
 }
 
-void printAll(std::string roomMap[][7], std::map<std::string, Rooms> rooms, Coordinates currentRoomCord, std::vector<std::string> inventory, std::string room[][15], Coordinates playerCord, Coordinates itemCord, std::vector<Coordinates> zombieCord, std::map<std::string, Coordinates> itemCords, std::map<std::string, std::vector<Coordinates>> zombieCords, int health) {
+void printAll(std::string roomMap[][7], std::map<std::string, Rooms> rooms, Coordinates currentRoomCord, std::vector<std::string> inventory, std::string room[][15], Coordinates playerCord, Coordinates itemCord, std::vector<Coordinates> zombieCord, std::map<std::string, Coordinates> itemCords, std::map<std::string, std::vector<Coordinates>> zombieCords, int health, int bossHealth, Coordinates prevRoom, Coordinates prevPos, bool inBossFight) {
     std::cout << "RoomMap" << std::endl;
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 7; j++) {
@@ -576,9 +601,25 @@ void printAll(std::string roomMap[][7], std::map<std::string, Rooms> rooms, Coor
 
     std::cout << "Health" << std::endl;
     std::cout << health << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Boss health" << std::endl;
+    std::cout << bossHealth << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "prevRoom" << std::endl;
+    std::cout << prevRoom.x << ' ' << prevRoom.y << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "prevPos" << std::endl;
+    std::cout << prevPos.x << ' ' << prevPos.y << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "inBossFight" << std::endl;
+    std::cout << inBossFight << std::endl;
 }
 
-void clearData(const int mapLength, const int mapWidth, std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> & inventory, std::string & msg, const int roomWidth, const int roomLength, std::string room[15][15], Coordinates & playerCord, Coordinates & itemCord, std::vector<Coordinates> & zombieCord, std::map<std::string, Coordinates> & itemCords, std::map<std::string, std::vector<Coordinates>> & zombieCords, int & health, int & bossHealth, Coordinates facing) {
+void clearData(const int mapLength, const int mapWidth, std::string roomMap[][7], std::map<std::string, Rooms> & rooms, Coordinates & currentRoomCord, std::vector<std::string> & inventory, std::string & msg, const int roomWidth, const int roomLength, std::string room[15][15], Coordinates & playerCord, Coordinates & itemCord, std::vector<Coordinates> & zombieCord, std::map<std::string, Coordinates> & itemCords, std::map<std::string, std::vector<Coordinates>> & zombieCords, int & health, int & bossHealth, Coordinates facing, Coordinates & prevRoom, Coordinates & prevPos, bool & inBossFight) {
 
     for (int i = 0; i < mapLength; i++) {
         for (int j = 0; j < mapWidth; j++) {
@@ -613,6 +654,10 @@ void clearData(const int mapLength, const int mapWidth, std::string roomMap[][7]
 
     health = 100;
     bossHealth = 100;
+
+    prevPos = {0, 0};
+    prevRoom = {0, 0};
+    inBossFight = false;
     // const int arr_size = 10;
     // some_type src[arr_size];
     // // ...

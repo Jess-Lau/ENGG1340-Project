@@ -38,7 +38,9 @@ int main() {
     zombieCord = {{0,1}}; // make zombies (cannot be see yet, cuz player is in the starting room)
     std::map<std::string, Coordinates> itemCords; // for storing item coordinates
     std::map<std::string, std::vector<Coordinates>> zombieCords; // for storing zombie coordinates
-    
+    Coordinates prevRoom = {0, 0}, prevPos = {0, 0};
+    bool inBossFight = false;
+
     // Player Statistics
     int health = 100;
     int bossHealth = 20;
@@ -55,9 +57,12 @@ int main() {
         std::cout << "Resume Game" << std::endl;
         std::string gameFile;
         resumeGameWin(gameFile);
+        std::cout << gameFile << std::endl;
+        std::cin.get();
         if (!gameFile.empty()) {
-            loadGame(gameFile, roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth);
-            // printAll(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health);
+            loadGame(gameFile, roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
+            // printAll(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
+            // std::cin.get();
             createInRoom(rooms, roomMap[currentRoomCord.x][currentRoomCord.y], room, roomWidth, roomLength, playerCord, itemCord, zombieCord);
             break;
         }
@@ -73,17 +78,20 @@ int main() {
 
     while (mode == "Start Game" || mode == "Resume Game") {
         if (restart) {
-            clearData(mapLength, mapWidth, roomMap, rooms, currentRoomCord, inventory, msg, roomWidth, roomLength, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, facing);
+            clearData(mapLength, mapWidth, roomMap, rooms, currentRoomCord, inventory, msg, roomWidth, roomLength, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, facing, prevRoom, prevPos, inBossFight);
             restart = false;
         }
         
-        std::cout << "Start Game" << std::endl;
         clearScreen();
-
+        // std::cout << mode << std::endl;
 
         if (mode == "Start Game") {
             generateMap(roomMap, mapLength, mapWidth, rooms);
             createInRoom(rooms, roomMap[currentRoomCord.x][currentRoomCord.y], room, roomWidth, roomLength, playerCord, itemCord, zombieCord);
+        }
+        
+        if (mode == "Resume Game") {
+            mode = "Start Game";
         }
 
         exportMap(roomMap, rooms, mapLength, mapWidth);
@@ -97,8 +105,13 @@ int main() {
             printInRoom(room, roomWidth, roomLength, playerCord, inputKey, inventory, health);
             printAtMiddle(msg, roomWidth*3 + 4);
             printAtMiddle(roomMap[currentRoomCord.x][currentRoomCord.y], roomWidth*3 + 4);
+            inputKey = "NONE";
 
-            inputKey = getInput();
+            std::cout << "1" << std::endl;
+            if (!inBossFight) {
+                inputKey = getInput();
+            }
+            std::cout << "2" << std::endl;
 
             clearScreen();
             msg = "";
@@ -107,7 +120,7 @@ int main() {
                 selectionWin(endGame, restart);
                 if (endGame) {
                     mode = "Exit";
-                    saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth);
+                    saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
                     break;
                 }
                 else if (restart) {
@@ -117,10 +130,10 @@ int main() {
 
             // If player wants to move
             else if (inputKey == "UP" || inputKey == "DOWN" || inputKey == "LEFT" || inputKey == "RIGHT"){
-                Coordinates lastCord = playerCord;
+                prevPos = playerCord;
                 moveToNext(room, playerCord, inputKey, " ");
                 facingSide(facing, inputKey);
-                if (lastCord.x == playerCord.x && lastCord.y == playerCord.y) {
+                if (prevPos.x == playerCord.x && prevPos.y == playerCord.y) {
                     continue;
                 }
             }
@@ -149,6 +162,10 @@ int main() {
                 else continue;
             }
 
+            else if (inputKey == "NONE") {
+                // just resume game and it is boss fight
+            }
+
             else continue;
 
             // Zombie attack
@@ -170,36 +187,45 @@ int main() {
             }
 
             // If player is at the edge of the room
-            if (playerCord.x == 0 || playerCord.x == roomWidth+3 || playerCord.y == 0 || playerCord.y == roomLength+3) {
-                clearRoom(room, roomLength, roomWidth);
-                zombieCords[roomMap[currentRoomCord.x][currentRoomCord.y]] = zombieCord;
+            if (playerCord.x == 0 || playerCord.x == roomWidth+3 || playerCord.y == 0 || playerCord.y == roomLength+3 || inBossFight) {
+                if (!inBossFight) {
+                    clearRoom(room, roomLength, roomWidth);
+                    zombieCords[roomMap[currentRoomCord.x][currentRoomCord.y]] = zombieCord;
+                    prevRoom = {currentRoomCord.x, currentRoomCord.y};
 
-                if (playerCord.x == 0) {
-                    currentRoomCord.x--;
-                    msg = "You travelled North";
-                    playerCord.x = roomWidth+2;
-                } else if (playerCord.x == roomWidth+3) {
-                    currentRoomCord.x++;
-                    msg = "You travelled South";
-                    playerCord.x = 1;
-                } else if (playerCord.y == 0) {
-                    currentRoomCord.y--;
-                    msg = "You travelled West";
-                    playerCord.y = roomLength+2;
-                } else if (playerCord.y == roomLength+3) {
-                    currentRoomCord.y++;
-                    msg = "You travelled East";
-                    playerCord.y = 1;
+                    if (playerCord.x == 0) {
+                        currentRoomCord.x--;
+                        msg = "You travelled North";
+                        playerCord.x = roomWidth+2;
+                    } else if (playerCord.x == roomWidth+3) {
+                        currentRoomCord.x++;
+                        msg = "You travelled South";
+                        playerCord.x = 1;
+                    } else if (playerCord.y == 0) {
+                        currentRoomCord.y--;
+                        msg = "You travelled West";
+                        playerCord.y = roomLength+2;
+                    } else if (playerCord.y == roomLength+3) {
+                        currentRoomCord.y++;
+                        msg = "You travelled East";
+                        playerCord.y = 1;
+                    }
                 }
                 // room[playerCord.x][playerCord.y] = 'P';
 
                 if (rooms[roomMap[currentRoomCord.x][currentRoomCord.y]].isBossRoom) {
-                    bool needSaveGame;
-                    bossFightWin(health, inventory.size(), endGame, needSaveGame, bossHealth, restart);
+                    inBossFight = true;
+                    bool needSaveGame = false, leaveFight = false;
+                    bossFightWin(health, inventory.size(), endGame, needSaveGame, bossHealth, restart, leaveFight);
                     if (needSaveGame) {
-                        saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth);
+                        saveGame(roomMap, rooms, currentRoomCord, inventory, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, prevRoom, prevPos, inBossFight);
                     }
-                    else if (restart || endGame) {
+                    else if (leaveFight) {
+                        inBossFight = false;
+                        currentRoomCord = prevRoom;
+                        playerCord = prevPos;
+                    }
+                    if (restart || endGame) {
                         break;
                     }
                 }
