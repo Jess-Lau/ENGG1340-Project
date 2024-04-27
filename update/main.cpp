@@ -43,7 +43,7 @@ int main() {
 
     // Player Statistics
     int health = 100;
-    int bossHealth = 20;
+    int bossHealth = 100;
     Coordinates facing = {0, 0};
 
     bool endGame = false;
