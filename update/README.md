@@ -104,12 +104,14 @@ Being attacked by a zombie would lead to a decrease in Hit Points of 5%. Killing
 The player will encounter a boss and beat it in order to complete their journey. The player needs to strategize and use collected items to defeat the boss.
 
 Players can choose between 3 options in response to the Boss’ action (Attack, Dodge or Heal) in each turn:
--- Attack:	This option would lead to a 10-point decrement of the boss’s hit points. Every item in the inventory would create an additional Attack Point.
-						50% chance for the boss to attack.
--- Dodge: 	This option would dodge the boss’ attack to prevent from resulting Hit Points reduction. If the boss does not choose the "Attack" option, nothing will happen.
-						25% chance for the boss to dodge
--- Heal: 		This option would lead to a 10-point increment of the player’s hit points.
-						25% chance for the boss to dodge
+-- Attack: This option would lead to a 10-point decrement of the boss’s hit points. Every item in the inventory would create an additional Attack Point.
+50% chance for the boss to attack.
+
+-- Dodge: This option would dodge the boss’ attack to prevent from resulting Hit Points reduction. If the boss does not choose the "Attack" option, nothing will happen.
+25% chance for the boss to dodge
+      
+-- Heal: This option would lead to a 10-point increment of the player’s hit points.
+25% chance for the boss to dodge
 
 Super Attack Modes of the Boss:
 Emotional Damage Attack and Depression: When the Boss chooses to attack the player using “Emotional Damage Attack”, the player will face “Depression mode”. Under “Depression mode”, the Attack Points of the player are reduced by 1 (Can be superimposed if the boss makes more than 1 “Emotional Damage Attack” during the fight.)
