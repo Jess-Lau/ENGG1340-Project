@@ -398,8 +398,8 @@ void settingWin() {
         "D/→    move rightward",
         "SPACE  take items / kill zombies",
         "ESE    open pop up menu (may need to wait for a while)",
-        "Enter  confirm",
-        "Delete delete the saving",
+        "ENTER  confirm",
+        "DELETE delete the saving",
         "",
         "DONATION: PAYME 6138 9189"
     };
