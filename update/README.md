@@ -116,6 +116,8 @@ Players can choose between 3 options in response to the Boss’ action (Attack, 
 -- Heal: This option would lead to a 10-point increment of the player’s hit points.
 25% chance for the boss to dodge
 
+-- Flee: This option will escape the current round fight with the boss, but leading to a 40% decrease in player's HP.
+
 Super Attack Modes of the Boss:
 
 Emotional Damage Attack and Depression: When the Boss chooses to attack the player using “Emotional Damage Attack”, the player will face “Depression mode”. Under “Depression mode”, the Attack Points of the player are reduced by 1 (Can be superimposed if the boss makes more than 1 “Emotional Damage Attack” during the fight.)
