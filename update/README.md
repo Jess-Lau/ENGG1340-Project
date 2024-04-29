@@ -1,5 +1,5 @@
 RUN THE GAME BY:
-g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC
+g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC__
 ./test
 
 Run the game once to check the bugs:
@@ -18,7 +18,7 @@ Run the game once to check the bugs:
 # ENGG1340-Group
 Members:
 1. Lau Chung Hei (@Jess-Lau) UID: 3035686839
-2. UID: 
+2. Pang Sik Yuen (@RyanPangSY) UID: 3036225565
 3. UID:
 4. UID:
 5. UID: 
