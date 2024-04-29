@@ -1,5 +1,6 @@
 RUN THE GAME BY:<br />
 g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC<br />
+mkdir save<br />
 ./test
 
 Run the game once to check the bugs:
@@ -66,6 +67,9 @@ Moreover, the player has the option to resume their progress. This means they ca
 ## Compilation and execution instructions:
 To compile the program, type:
 g++ -pedantic-errors -std=c++11 main.cpp -o dungeon $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC 
+
+To make a saving folder, type:
+mkdir save
 
 To execute the program, type: 
 ./dungeon
