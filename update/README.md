@@ -17,7 +17,7 @@ Run the game once to check the bugs:
 
 # ENGG1340-Group
 Members:
-1. UID: 
+1. Lau Chung Hei (@Jess-Lau) UID: 3035686839
 2. UID: 
 3. UID:
 4. UID:
