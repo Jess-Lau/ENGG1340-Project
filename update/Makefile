@@ -17,7 +17,7 @@ OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 # Rule to build the executable
 $(TARGET): $(OBJS) $(INCS)
 	$(CXX) $(CXXFLAGS) $< -o $@ $(NCFLAGS)
-	mkdir save
+	mkdir -p save
 
 # Rule to build object files
 $(OBJDIR)%.o: %.cpp %.h
