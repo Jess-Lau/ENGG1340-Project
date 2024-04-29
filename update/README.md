@@ -129,3 +129,11 @@ Rage Mode: The boss will be under “Rage mode” if the Hit Points of the boss 
 ## Challenges and highlights: 
 Map: The map of the game would not be shown, which also makes the game challenging. 
 Randomized positions: The position of items and zombies are randomized, and the map is also randomly generated, leading to a sense of uncertainty, which makes the game more intriguing. 
+
+## Feature:
+
+## List of Non-standard libraries used:
+
+
+
+
