@@ -1,5 +1,5 @@
 RUN THE GAME BY:
-g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC__
+g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC<br />
 ./test
 
 Run the game once to check the bugs:
