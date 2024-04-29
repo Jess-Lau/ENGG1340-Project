@@ -9,16 +9,18 @@ TARGET := dungeon
 
 # Source files
 SRCS := $(wildcard *.cpp)
+# Header files
+INCS := $(wildcard *.h)
 # Object files
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 
 # Rule to build the executable
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(NCFLAGS)
+$(TARGET): $(OBJS) $(INCS)
+	$(CXX) $(CXXFLAGS) $< -o $@ $(NCFLAGS)
 	mkdir save
 
 # Rule to build object files
-$(OBJDIR)%.o: %.cpp
+$(OBJDIR)%.o: %.cpp %.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(NCFLAGS)
 
 # Clean rule
