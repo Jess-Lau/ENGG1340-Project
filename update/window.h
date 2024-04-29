@@ -267,6 +267,11 @@ void resumeGameWin(std::string & gameFile) {
 
     DIR * dir;
     struct dirent * ent;
+    int choice;
+    int highlight = 0;
+    int scroll = 0;
+    bool confirm = false;
+
     if ((dir = opendir("save")) != NULL) {
         int i = 1;
         while ((ent = readdir(dir)) != NULL) {
@@ -278,19 +283,7 @@ void resumeGameWin(std::string & gameFile) {
         closedir(dir);
     }
     
-    int choice;
-    int highlight = 0;
     mvwprintw(resumeWin, 1, printCentre("Saves", width), "Saves");
-
-    if (choices.empty()) {
-        mvwprintw(resumeWin, 3, printCentre("No saved files found", width), "No saved files found");
-        choice = wgetch(resumeWin);
-        while (choice != 27) {
-            choice = wgetch(resumeWin);
-        }
-    }
-
-    int scroll = 0;
 
     // print the list of saves
     while (choice != 27 && !choices.empty()) {
@@ -337,16 +330,26 @@ void resumeGameWin(std::string & gameFile) {
 
         // delete saving
         if (choice == 330 || choice == 263) {
-            bool confirm = false;
             confirmWin(confirm);
             if (confirm) {
-                choices.erase(choices.begin() + highlight + scroll);
                 std::string gameFilePath = "save/" + choices[highlight+scroll];
                 std::remove(gameFilePath.c_str());
+                choices.clear();
+                if ((dir = opendir("save")) != NULL) {
+                    int i = 1;
+                    while ((ent = readdir(dir)) != NULL) {
+                        if (ent->d_name[0] != '.') {
+                            choices.emplace_back(ent->d_name);
+                            i++;
+                        }
+                    }
+                    closedir(dir);
+                }
+                else break;
             }
         }
 
-        // load the game
+        // record the game file name and exit this window and start game
         if (choice == 10) {
             gameFile = choices[highlight+scroll];
             break;
@@ -354,6 +357,17 @@ void resumeGameWin(std::string & gameFile) {
         wclear(resumeWin);
         box(resumeWin, 0, 0);
         // mvwprintw(resumeWin, 2, 2, "%d %d", highlight, scroll);
+    }
+
+    // if the save file is empty (no savings)
+    if (choices.empty()) {
+        mvwprintw(resumeWin, 1, printCentre("Saves", width), "Saves");
+        mvwprintw(resumeWin, 3, printCentre("No saved files found", width), "No saved files found");
+        wmove(resumeWin, 11, 2);
+        choice = wgetch(resumeWin);
+        while (choice != 27) {
+            choice = wgetch(resumeWin);
+        }
     }
 
     endwin();
