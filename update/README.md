@@ -206,7 +206,7 @@ The program is split into multiple files: gameSetUp.h, inRoom.h, pathfinding.h, 
 #include directives are used to include these files, allowing separate compilation of different parts of the program.
 
 ## List of Non-standard libraries used:
-
-
-
-
+|Non-standard libraries|Usage|
+|----|----|
+|ncurses|The ncurses (New Curses) library is a non-standard C/C++ library that provides a text-based user interface (TUI) development framework. It is often used in Unix-like operating systems, such as Linux and macOS, to create interactive terminal-based applications. Our game used this library for the user interface to make the game more interactive and easy to understand. As this project require us to make a text-based game that can be played via SSH terminal, instead we just implement it with 100% text, ncurses offer us to make it more like GUI (Graphical User Interface), so that the player no need to type complicated commands for controlling the game.|
+|dirent|hi|
