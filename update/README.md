@@ -73,6 +73,12 @@ The game loop persists until the player either emerges victorious against the bo
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
 ## Compilation and Execution Instructions:
+Install the ncurses dependency (Not necessary for the HKU CS "academy" SSH server):\
+For Debian/Ubuntu:
+<pre>
+sudo apt install libncurses-dev
+</pre>
+
 Get our repository to your computer (If you have not done so):
 <pre>
 git clone https://github.com/Jess-Lau/ENGG1340-Project.git
