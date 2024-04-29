@@ -19,7 +19,7 @@ Run the game once to check the bugs:
 Members:
 1. Lau Chung Hei (@Jess-Lau) UID: 3035686839
 2. Pang Sik Yuen (@RyanPangSY) UID: 3036225565
-3. UID:
+3. Kwong Kin To (@KwongKinTo) UID: 3036236435
 4. UID:
 5. UID: 
 
