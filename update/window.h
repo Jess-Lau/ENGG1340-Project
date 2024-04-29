@@ -408,12 +408,12 @@ void settingWin() {
 
     while (choice != 27 && !choices.empty()) {
         mvwprintw(settingWin, 1, printCentre("Settings", width), "Settings");
-        mvwprintw(settingWin, 3, 2, "Key    Action");
+        mvwprintw(settingWin, 3, 3, "Key    Action");
         for (int i = 0; i < choices.size() && i < 8; i++) {
             if (i == highlight) {
                 wattron(settingWin, A_REVERSE);
             }
-            mvwprintw(settingWin, i + 4, 2, choices[i+scroll].substr(0, choices[i+scroll].find(".")).c_str());
+            mvwprintw(settingWin, i + 4, 3, choices[i+scroll].substr(0, choices[i+scroll].find(".")).c_str());
             wattroff(settingWin, A_REVERSE);
             wmove(settingWin, 11, 78);
         }
