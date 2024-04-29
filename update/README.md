@@ -1,4 +1,8 @@
 RUN THE GAME BY:<br />
+make\
+./dungeon
+
+Old method:\
 g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC<br />
 mkdir save<br />
 ./test
@@ -65,11 +69,10 @@ The game loop persists until the player either emerges victorious against the bo
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
 ## Compilation and execution instructions:
-To compile the program, type:
-g++ -pedantic-errors -std=c++11 main.cpp -o dungeon $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC 
+To compile the program, just type:
+make
 
-To make a saving folder, type:
-mkdir save
+The save folder will also be created automatically while the "make" process.
 
 To execute the program, type: 
 ./dungeon
