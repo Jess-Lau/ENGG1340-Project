@@ -78,6 +78,11 @@ Get our repository to your computer (If you have not done so):
 git clone https://github.com/Jess-Lau/ENGG1340-Project.git
 </pre>
 
+Enter to the directory:
+<pre>
+cd ENGG1340-Project
+</pre>
+
 To compile the program, just type:
 <pre>
 make
