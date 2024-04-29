@@ -55,6 +55,8 @@ int main() {
     while (mode != "Start Game") {
         menuWin(mode);
 
+        if (mode == "Exit") break;
+
         while (mode == "Settings") {
             settingWin();
             mode = "Menu";
@@ -77,7 +79,7 @@ int main() {
     }
 
 
-    while (true) {
+    while (mode != "Exit") {
         if (restart) {
             clearData(mapLength, mapWidth, roomMap, rooms, currentRoomCord, inventory, msg, roomWidth, roomLength, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, facing, prevRoom, prevPos, inBossFight);
             restart = false;
