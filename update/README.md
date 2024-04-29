@@ -132,31 +132,42 @@ Randomized positions: The position of items and zombies are randomized, and the 
 
 ## Feature:
 Randomized Game Sets and Events:
+
 The game map is generated at the start of the game. It consists of a fixed number of rooms and the position of the rooms is randomized. Also, the number of zommbies, coordinates of items and zombies are all randomized in the map generation process. The boss fight in the game is also randomized with the boss using random moves with a set probability for each moves.
 
 Game Status Storage:
+
 The Status in this game are concluded in the followings:
+
 Game Map Layout:
 The layout of rooms in the game map, it consist of 8 rooms with different names, one is the starting place and one is the Boss room. A 2D array is used to store the layout.
+
 Room Details:
 The struct Rooms stores information about each room, such as its name, connected rooms, and whether it's a starting or boss room, with map<string, Rooms> storing the information of all rooms.
+
 Coordinates of items & zombies:
 The X,Y coordinates of the item and zombie(s) in the room.
+
 Player Position:
 It includes the current room the player at and the X,Y coordinate of the player in the room, which are storing in separate variables.
+
 Inventory:
 A vector is used to record the items collected by the player.
+
 Player's Health & Boss Health:
 Integer variables are used to record the health of the player and the boss.
+
 The above status will be generated at the start of the game which would be change as the game progress.
 
 Save & Load:
+
 The player have the option to save their progress in the middle of the game by using ESC to call the menu and select the "Save and Quit" option.
 The game status mentioned  will be output into a save file named with the time and date when it is saved. The player can then resume their game next time he start the game.
 loadGame() and saveGame() functions handle loading and saving game status to files.
 File input/output operations are used to read and write game data, allowing the game to be saved and resumed.
 
 Separate compilation:
+
 The program is split into multiple files: gameSetUp.h, inRoom.h, pathfinding.h, and window.h, each containing related functions and declarations.
 #include directives are used to include these files, allowing separate compilation of different parts of the program.
 
