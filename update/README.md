@@ -69,13 +69,19 @@ The game loop persists until the player either emerges victorious against the bo
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
 ## Compilation and Execution Instructions:
+Get our repository to your computer (If you have not done so):\
+git clone https://github.com/Jess-Lau/ENGG1340-Project.git
+
 To compile the program, just type:\
 make
 
 The save folder will also be created automatically while the "make" process.
 
-To execute the program, type: \
+To execute the program, type:\
 ./dungeon
+
+To clean up the program folder (i.e., remove the compiled and executable programs), type:\
+make clean
 
 ## Game Objective:
 The player's objective is to defeat the boss and complete their journey.
