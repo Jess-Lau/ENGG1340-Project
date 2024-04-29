@@ -68,13 +68,13 @@ The game loop persists until the player either emerges victorious against the bo
 
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
-## Compilation and execution instructions:
-To compile the program, just type:
+## Compilation and Execution Instructions:
+To compile the program, just type:\
 make
 
 The save folder will also be created automatically while the "make" process.
 
-To execute the program, type: 
+To execute the program, type: \
 ./dungeon
 
 ## Game Objective:
