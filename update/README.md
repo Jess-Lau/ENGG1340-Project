@@ -1,7 +1,15 @@
-RUN THE GAME BY:<br />
-g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC<br />
-mkdir save<br />
+RUN THE GAME BY:
+<pre>
+make
+./dungeon
+</pre>
+
+Old method:
+<pre>
+g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC
+mkdir save
 ./test
+</pre>
 
 Run the game once to check the bugs:
 - when starting the game by pressing the arrow keys, the exit game may pop up (solved)
@@ -64,15 +72,33 @@ The game loop persists until the player either emerges victorious against the bo
 
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
-## Compilation and execution instructions:
-To compile the program, type:
-g++ -pedantic-errors -std=c++11 main.cpp -o dungeon $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC 
+## Compilation and Execution Instructions:
+Get our repository to your computer (If you have not done so):
+<pre>
+git clone https://github.com/Jess-Lau/ENGG1340-Project.git
+</pre>
 
-To make a saving folder, type:
-mkdir save
+Enter to the directory:
+<pre>
+cd ENGG1340-Project
+</pre>
 
-To execute the program, type: 
+To compile the program, just type:
+<pre>
+make
+</pre>
+
+The save folder will also be created automatically while the "make" process.
+
+To execute the program, type:
+<pre>
 ./dungeon
+</pre>
+
+To clean up the program folder (i.e., remove the compiled and executable programs), type:
+<pre>
+make clean
+</pre>
 
 ## Game Objective:
 The player's objective is to defeat the boss and complete their journey.
