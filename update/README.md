@@ -51,7 +51,7 @@ What to submit (by each individual student)
 
 # Welcome to DUNGEON GAME !!
 
-## Demonstration Video
+## Demonstration Video:
 https://drive.google.com/file/d/1orL9xyLDSUEhGuIypy5l0XLONStceJow/view?usp=drivesdk
 
 ## Game Description:
