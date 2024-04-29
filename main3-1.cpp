@@ -418,6 +418,7 @@ string toLower(string str) {
     return str;
 }
 
+//roomnumber function
 int roomNumber(Rooms *room, string currentRoom) {
     // cout << "Before" << endl;
     // cout << "Current room: " << currentRoom << endl;
