@@ -14,7 +14,6 @@
 // Signal handling function
 void signalHandler(int signum) {
     // std::cout << "Interrupt signal (" << signum << ") received.\n";
-
     // Ignore the signal
     signal(signum, SIG_IGN);
 }
@@ -24,6 +23,7 @@ int printCentre(std::string text, int width) {
 }
 
 std::string getInput(){
+
     initscr();
     cbreak();
     int key = wgetch(stdscr);
@@ -42,11 +42,14 @@ std::string getInput(){
         case 27: inputKey = "ESC"; break;
         case 13: inputKey = "ENTER"; break;
         case 32: inputKey = "SPACE"; break;
+        case 46: case 8: inputKey = "DELETE"; break;
     }
     endwin();
     return inputKey;
 }
 
+// tried to implement the gameplay window but failed
+// therefore, original gameplayWin function is commented out
 /*
 void gameplayWin(std::string room[][15], const int roomWidth, const int roomLength) {
     signal(SIGINT, signalHandler);
@@ -181,6 +184,71 @@ void menuWin(std::string & mode) {
     return;
 }
 
+void confirmWin(bool & confirm) {
+
+    signal(SIGINT, signalHandler);
+    signal(SIGTSTP, signalHandler);
+    setlocale(LC_ALL, "");
+    
+    // Ncurse initialization
+    initscr();
+    cbreak();
+    noecho();
+
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+    int width = 40, height = 6;
+
+    WINDOW * confirmWin = newwin(height, width, 4, 20);
+    box(confirmWin, 0, 0);
+    refresh();
+    wrefresh(confirmWin);
+
+    keypad(confirmWin, true); // Enable arrow keys (and other special keys
+
+    std::vector<std::string> choices = {"No", "Yes"};
+    int choice;
+    int highlight = 0;
+
+
+    while (choice != 27) {
+        mvwprintw(confirmWin, 1, printCentre("Are you sure to delete the saveing?", width), "Are you sure to delete the saveing?");
+        for (int i = 0; i < choices.size(); i++) {
+            if (i == highlight) {
+                wattron(confirmWin, A_REVERSE);
+            }
+            mvwprintw(confirmWin, i + 3, printCentre(choices[i], width), choices[i].c_str());
+            wattroff(confirmWin, A_REVERSE);
+        }
+        wmove(confirmWin, 1, 1);
+        refresh();
+        choice = wgetch(confirmWin);
+        switch (choice) {
+            case KEY_UP: case 'w': case 'W':
+                highlight--;
+                if (highlight == -1) {
+                    highlight = 0;
+                }
+                break;
+            case KEY_DOWN: case 's': case 'S':
+                highlight++;
+                if (highlight == choices.size()) {
+                    highlight = choices.size()-1;
+                }
+                break;
+            default:
+                break;
+        }
+        if (choice == 10) {
+            confirm = choices[highlight]=="Yes"? true:false;
+            break;
+        }
+    }
+    endwin();
+    return;
+}
+
 void resumeGameWin(std::string & gameFile) {
     initscr();
     cbreak();
@@ -224,6 +292,7 @@ void resumeGameWin(std::string & gameFile) {
 
     int scroll = 0;
 
+    // print the list of saves
     while (choice != 27 && !choices.empty()) {
         mvwprintw(resumeWin, 1, printCentre("Saves", width), "Saves");
         for (int i = 0; i < choices.size() && i < 8; i++) {
@@ -265,6 +334,19 @@ void resumeGameWin(std::string & gameFile) {
             default:
                 break;
         }
+
+        // delete saving
+        if (choice == 330 || choice == 263) {
+            bool confirm = false;
+            confirmWin(confirm);
+            if (confirm) {
+                choices.erase(choices.begin() + highlight + scroll);
+                std::string gameFilePath = "save/" + choices[highlight+scroll];
+                std::remove(gameFilePath.c_str());
+            }
+        }
+
+        // load the game
         if (choice == 10) {
             gameFile = choices[highlight+scroll];
             break;
@@ -293,13 +375,68 @@ void settingWin() {
 
     int choice;
     int highlight = 0;
+    mvwprintw(settingWin, 1, printCentre("Saves", width), "Saves");
 
-    while (choice != 27) {
-        mvwprintw(settingWin, 7, printCentre("Nothing to see", width), "Nothing to see");
-        choice = wgetch(settingWin);
-        if (choice == 10) {
-            break;
+    std::vector<std::string> choices = {
+        "W/↑    move upward",
+        "S/↓    move downward",
+        "A/←    move leftward",
+        "D/→    move rightward",
+        "SPACE  take items / kill zombies",
+        "ESE    open pop up menu (may need to wait for a while)",
+        "Enter  confirm",
+        "Delete delete the saving",
+        "",
+        "DONATION: PAYME 6138 9189"
+    };
+
+    int scroll = 0;
+
+    while (choice != 27 && !choices.empty()) {
+        mvwprintw(settingWin, 1, printCentre("Settings", width), "Settings");
+        mvwprintw(settingWin, 3, 2, "Key    Action");
+        for (int i = 0; i < choices.size() && i < 8; i++) {
+            if (i == highlight) {
+                wattron(settingWin, A_REVERSE);
+            }
+            mvwprintw(settingWin, i + 4, 2, choices[i+scroll].substr(0, choices[i+scroll].find(".")).c_str());
+            wattroff(settingWin, A_REVERSE);
+            wmove(settingWin, 11, 78);
         }
+        wrefresh(settingWin);
+        choice = wgetch(settingWin);
+        switch (choice) {
+            case KEY_UP: case 'w': case 'W':
+                highlight--;
+                // make the list scrollable
+                if (highlight == -1 && scroll != 0 && choices.size() > 8) {
+                    scroll--;
+                    highlight++;
+                }
+                else if (highlight == -1) {
+                    highlight = 0;
+                }
+                break;
+            case KEY_DOWN: case 's': case 'S':
+                highlight++;
+                // make the list scrollable
+                if (highlight == 8 && choices.size() > 8) {
+                    scroll++;
+                    highlight--;
+                    if (highlight + scroll == choices.size()) {
+                        scroll--;
+                    }
+                }
+                else if (highlight == choices.size()) {
+                    highlight = choices.size()-1;
+                }
+                break;
+            default:
+                break;
+        }
+        wclear(settingWin);
+        box(settingWin, 0, 0);
+        // mvwprintw(resumeWin, 2, 2, "%d %d", highlight, scroll);
     }
 
     endwin();
@@ -427,13 +564,13 @@ void selectionWin(bool & endGame, bool & restart) {
         }
         choice = wgetch(meunWin);
         switch (choice) {
-            case 'w': case 'W':
+            case KEY_UP: case 'w': case 'W':
                 highlight--;
                 if (highlight == -1) {
                     highlight = 0;
                 }
                 break;
-            case 's': case 'S':
+            case KEY_DOWN: case 's' : case 'S':
                 highlight++;
                 if (highlight == choices.size()) {
                     highlight = choices.size()-1;
@@ -529,19 +666,27 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
     }
 
     while (choice != 27) {
-        
+        // print the boss image out
         for (int i = 0; i < 17; i++) {
             mvwprintw(bossWin, i+1, 40, "%s", bossImage[i].c_str());
         }
+        // print the boss name
         mvwprintw(bossWin, 2, 35, "Boss: Linux");
-        mvwprintw(bossWin, 3, 35, "%s %d%%         ", bossBar.c_str(), bossHealth);
+        // print the health bar of the boss
+        mvwprintw(bossWin, 3, 35, "                 ", bossBar.c_str(), bossHealth);
+        mvwprintw(bossWin, 3, 35, "%s %d%%", bossBar.c_str(), bossHealth);
+        // rage mode if boss health is above 120
         if (bossHealth >= 120) mvwprintw(bossWin, 4, 35, "(RAGE)");
         if (depression > 0) mvwprintw(bossWin, 12, 2, "Depression +%d%%", depression);
+        // print the player's name
         mvwprintw(bossWin, 13, 2, "ENGG1340 Victim");
-        mvwprintw(bossWin, 14, 2, "                 ");
+        // print the health bar of the player
+        mvwprintw(bossWin, 14, 2, "                   ");
         mvwprintw(bossWin, 14, 2, "%s %d%%", healthBar.c_str(), health);
+        // print the player image
         mvwprintw(bossWin, 15, 5, "%s", player.c_str());
 
+        // selection for the player to make a move
         for (int i = 0; i < choices.size(); i++) {
             if (i == highlight) {
                 wattron(bossWin, A_REVERSE);
@@ -575,13 +720,16 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
             default:
                 break;
         }
+        // make the move when the player press "Enter"
         if (choice == 10) {
             makeMove(bossHealth, bossBar, health, healthBar, highlight, msg, 10+extraDamage-depression*2, maxHealth, depression, leaveFight);
+            // print out the message
             mvwprintw(bossWin, 20, 44, "                              ");
             mvwprintw(bossWin, 20, 44, "%s", msg.c_str());
             wrefresh(bossWin);
             wmove(bossWin, 1, 1);
             sleep(1.7);
+            // if player decides to leave the fight
             if (leaveFight && health > 0) break;
         }
         else if (choice == 27) {
@@ -590,6 +738,9 @@ void bossFightWin(int & health, int extraDamage, bool & endGame, bool & saveGame
             selectionWin(endGame, restart);
             if (endGame) {
                 saveGame = true;
+                break;
+            }
+            else if (restart) {
                 break;
             }
             choice == 0;
