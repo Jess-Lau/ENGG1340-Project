@@ -1,4 +1,4 @@
-RUN THE GAME BY:
+RUN THE GAME BY:<br />
 g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC<br />
 ./test
 
