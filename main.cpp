@@ -84,6 +84,7 @@ int main() {
             clearData(mapLength, mapWidth, roomMap, rooms, currentRoomCord, inventory, msg, roomWidth, roomLength, room, playerCord, itemCord, zombieCord, itemCords, zombieCords, health, bossHealth, facing, prevRoom, prevPos, inBossFight);
             restart = false;
         }
+
         
         clearScreen();
         // std::cout << mode << std::endl;
@@ -91,6 +92,9 @@ int main() {
         if (!gameLoaded) {
             generateMap(roomMap, mapLength, mapWidth, rooms);
             createInRoom(rooms, roomMap[currentRoomCord.x][currentRoomCord.y], room, roomWidth, roomLength, playerCord, itemCord, zombieCord);
+        }
+        else {
+            gameLoaded = false;
         }
 
         exportMap(roomMap, rooms, mapLength, mapWidth);

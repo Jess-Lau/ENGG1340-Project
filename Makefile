@@ -25,6 +25,6 @@ $(OBJDIR)%.o: %.cpp %.h
 
 # Clean rule
 clean:
-	rm -rf $(OBJDIR)*.o $(TARGET) save
+	rm -rf $(OBJDIR)*.o $(TARGET) save map.txt
 
 .PHONY: clean
