@@ -29,8 +29,8 @@ Embarking on their journey, the player finds themselves in the initial room know
 The game loop persists until the player either emerges victorious against the boss or decides to exit the game. During each iteration of the loop, the game provides pertinent information to the player, including details about their current location, the contents of their inventory, and any messages relevant to their actions and decisions. 
 
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
-
-## <a name="compile"></a>Compilation and Execution Instructions:
+<a name="compile"></a>
+## Compilation and Execution Instructions:
 Install the ncurses dependency (Not necessary for the HKU CS "academy" SSH server):\
 For Debian/Ubuntu:
 <pre>
