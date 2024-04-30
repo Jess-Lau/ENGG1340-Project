@@ -1,4 +1,4 @@
-# Quick Start:
+## Quick Start
 Run:
 (Detailed instructions: [Compilation and Execution Instructions](#compile))
 <pre>
