@@ -1,60 +1,18 @@
-RUN THE GAME BY:
+# Quick Start:
+Run:
+(Detailed instructions: [Compilation and Execution Instructions](#compile))
 <pre>
 make
 ./dungeon
 </pre>
 
-Old method:
-<pre>
-g++ -pedantic-errors -std=c++11 main.cpp -o test $(ncursesw5-config --cflags --libs) -lncurses -DNCURSES_STACTIC
-mkdir save
-./test
-</pre>
-
-Run the game once to check the bugs:
-- when starting the game by pressing the arrow keys, the exit game may pop up (solved)
-- The flee function in boss fights have not been implemented (done)
-- half of the boss screen appear sometimes in the in-game menu (solved)
-- health = 0% and the game won't end after defecting the boss (solved)
-- debug info sudden comes up (solved)
-- two game screens appear when starting initially (tested on WSL 2) (solved)
-- todo: create save folder (solved)
-- After beating the boss and pressing play again (the first time), the map didn't update: The player appeared in the boss room (but the room was empty), when the player entered the boss room again, the boss: 0% HP, the player HP = HP after beating the boss, After beating boss and press play again (2nd time) --> start game bug (solved)
-- When no file is in the same folder, choose "Resume Game" and the screen will only display "Saves", not "Displaying no save file found (solved)
-
-
-
-# ENGG1340-Group
+# ENGG1340 - Group 45
 Members:
 1. Lau Chung Hei (@Jess-Lau) UID: 3035686839
 2. Pang Sik Yuen (@RyanPangSY) UID: 3036225565
 3. Kwong Kin To (@KwongKinTo) UID: 3036236435
 4. Wu Pei Ying (@penny064) UID: 3036179625
 5. Chan Hong Ching (@chan2000justin) UID: 3035994028
-
-Project instructions:
-• In the same Github repo that you set up in Stage 1.
-o Create a README.MD file in the repo that contains:
-▪ Identification of the team members.
-▪ A description of your game and introduce the game rules.
-▪ A list of features that you have implemented and explain how each coding element
-1 to 5 listed under the coding requirements aforementioned support your features.
-▪ A list of non-standard C/C++ libraries, if any, that are used in your work and integrated
-to your code repo. Please also indicate what features in your game are supported by
-these libraries.
-▪ Compilation and execution instructions. This serves like a "Quick start" of your game.
-The teaching team will follow your instructions to compile and run your game.
-o Your code including the makefile and all source files (.h / .cpp / .c)
-• Submit a link to the repo to Moodle. (Refer to the details on the submission page)
-• A video (at most 3 minutes long) demonstrating a gameplay and the implemented features of
-your program.
-o You can either submit a link to the video or upload it to Moodle, and add that in the
-README.MD file.
-o Video clips after 3 mins would be ignored if your demo is longer than 3 minutes.
-What to submit (by each individual student)
-• Submit on Moodle (Refer to the details on the submission page)
-• A list of work that you have done for the project.
-• A peer evaluation of your project partners in your group.
 
 --------------------------------------------------------------------
 
@@ -72,7 +30,7 @@ The game loop persists until the player either emerges victorious against the bo
 
 Moreover, the player has the option to resume their progress. This means they can exit the game and save their current state, resuming their adventure from where they left off during subsequent gameplay sessions.
 
-## Compilation and Execution Instructions:
+## <a name="compile"></a>Compilation and Execution Instructions:
 Install the ncurses dependency (Not necessary for the HKU CS "academy" SSH server):\
 For Debian/Ubuntu:
 <pre>
